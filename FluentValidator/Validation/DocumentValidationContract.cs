@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 
 namespace FluentValidator.Validation
 {
@@ -98,6 +97,7 @@ namespace FluentValidator.Validation
             digito = resto.ToString();
             tempCnpj = tempCnpj + digito;
             soma = 0;
+
             for (int i = 0; i < 13; i++)
                 soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
             resto = (soma % 11);
@@ -111,13 +111,14 @@ namespace FluentValidator.Validation
 
         private bool _IsPis(string pis)
         {
+            pis = pis.Trim();
+            pis = pis.Replace("-", "").Replace(".", "").PadLeft(11, '0');
+
             int[] multiplicador = new int[10] { 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
             int soma;
             int resto;
             if (pis.Trim().Length != 11)
                 return false;
-            pis = pis.Trim();
-            pis = pis.Replace("-", "").Replace(".", "").PadLeft(11, '0');
 
             soma = 0;
             for (int i = 0; i < 10; i++)
